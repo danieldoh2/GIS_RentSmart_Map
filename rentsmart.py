@@ -32,16 +32,30 @@ def query_iterator(length):
     start_index = 1
     end_index = 0
     for i in range(1, full_queries + 1):
-        if i == full_queries + 1 #Last iteration, including the remainders
-            
+        if i == div + 1 #Last iteration, including the remainders
+           retrieve_data(start)
         else:
-            if start_index == 1:
+            if start_index = 1:
+                start_index += 1
                 pass
             else:
-                start_index = end_index
+                start_index = end_index #resetting start_index back to 0
                 end_index += 32000
-                #query 
-            
+                retrieve_data(start_index, end_index, False)
+
+def retrieve_data(start, end, last):
+    if last == True:
+        sql_query = 'SELECT * from "dc615ff7-2ff3-416a-922b-f0f334f085d0" WHERE (_id > {starter})'.format(starter = start)
+        encoded_sql_query = urllib.parse.quote_plus(sql_query)
+
+        # Construct the full URL by appending the encoded query
+        full_url = f"{base_url}sql={encoded_sql_query}"
+
+        fileobj = urllib.request.urlopen(full_url)
+        response_dict = json.loads(fileobj.read())      
+        
+    else:
+        sql_query = 'SELECT * from "dc615ff7-2ff3-416a-922b-f0f334f085d0" WHERE (_id > {starter}) AND (_id < {ender})'.format(starter = start, ender = end)
 
 
 
