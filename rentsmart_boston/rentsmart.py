@@ -85,5 +85,12 @@ def query_iterator(all_entries_list):
         all_entries_list.extend(entries)
 
     print(f"Total entries retrieved: {len(all_entries_list)}")
-    return all_entries_list
+    # return all_entries_list
+    export_to_json(all_entries_list)
 
+def export_to_json(data):
+    try:
+        with open("data.json", 'w+') as myfile:
+            json.dump(data, myfile, indent= "")
+    except Exception as e:
+        print("Error in the export process!: ", e)
