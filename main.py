@@ -6,6 +6,7 @@ blank = []
 # Call the query_iterator function to populate the list
 try:
     all_entries = query_iterator(blank)
+    print("Success!")
 except Exception as e:
     print("error:", e)
 
