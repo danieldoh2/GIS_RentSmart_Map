@@ -85,5 +85,67 @@ def query_iterator(all_entries_list):
         all_entries_list.extend(entries)
 
     print(f"Total entries retrieved: {len(all_entries_list)}")
-    return all_entries_list
+    geo_json_transformation(all_entries_list)
+    # return all_entries_list
+    # export_to_json(all_entries_list)
+
+
+def geo_json_transformation(data: list) -> list:
+    '''
+    Loops through data, creates new features from old data features, preparing them for GeoJSON.
+
+    Args:
+        data (list): list of dictionaries, where each dictionary is a feature
+    
+    Returns:
+        new_data(list): List of dictionaries with extra geojson keys added
+    '''
+
+    geojson_data = {
+    "type": "FeatureCollection",
+    "features": []
+    }
+
+    for feature_dict in data:
+        new_dict = {
+            "type": "Feature", 
+            "geometry": {
+                "type": "Point",
+                "coordinates": [float(feature_dict["longitude"]), float(feature_dict["latitude"])]
+            },
+            "properties": {
+                 "_id": feature_dict["_id"],
+                "date": feature_dict["date"],
+                "violation_type": feature_dict["violation_type"],
+                "description": feature_dict["description"],
+                "address": feature_dict["address"],
+                "neighborhood": feature_dict["neighborhood"],
+                "zip_code": feature_dict["zip_code"],
+                "parcel": feature_dict["parcel"],
+                "owner": feature_dict["owner"],
+                "year_built": feature_dict["year_built"],
+                "year_remodeled": feature_dict["year_remodeled"],
+                "property_type": feature_dict["property_type"]
+  }
+        }
+        geojson_data["features"].append(new_dict)
+    
+    export_to_json(geojson_data)
+
+
+
+def export_to_json(data):
+    try:
+        with open("data.geojson", "w+") as f:
+            json.dump(data, f, indent=4)
+    except Exception as e:
+        print("Error in the export process!: ", e)
+
+    # try:
+    #     with open("data.json", 'w+') as myfile:
+    #         json.dump(data, myfile, indent= "")
+    # except Exception as e:
+    #     print("Error in the export process!: ", e)
+
+
 

@@ -1,5 +1,6 @@
 # Ignore configuration files
 config.json
+data.geojson
 
 # Ignore virtual environment directories
 .venv/
