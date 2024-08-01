@@ -134,7 +134,6 @@ def geo_json_transformation(data: list) -> list:
 
 
 
-
 def export_to_json(data):
     try:
         with open("data.geojson", "w+") as f:
@@ -147,4 +146,6 @@ def export_to_json(data):
     #         json.dump(data, myfile, indent= "")
     # except Exception as e:
     #     print("Error in the export process!: ", e)
+
+
 
